@@ -5,6 +5,7 @@ const connect = require("./helper/db");
 const mongoose = require("mongoose");
 
 app.use(cors());
+app.use(express.json());
 
 connect();
 
@@ -12,14 +13,31 @@ const Cat = mongoose.model("Cat", { name: String });
 
 app.get("/cats", async (req, res) => {
   //   await connect();
-  const data = await Cat.find()
+  const data = await Cat.find();
   res.send(data);
 });
 
 app.post("/cats", async (req, res) => {
-  const kitty = new Cat({ name: "mnho" });
-  kitty.save().then(() => console.log("meow"));
+  const body = req.body;
+  const kitty = new Cat(body);
+  await kitty.save();
   res.send("successfully created");
 });
 
-app.listen(3000);
+app.put("/cat/:id", async (req, res) => {
+  const id = req.params.id;
+  const cat = await Cat.findByIdAndUpdate(
+    id,
+    { name: "Nasaa boi" },
+    { new: true }
+  );
+  res.send(cat);
+});
+
+app.delete("/cat/:id", async (req, res) => {
+  const id = req.params.id;
+  await Cat.findByIdAndDelete(id);
+  res.send("deleted");
+});
+
+app.listen(4000);
