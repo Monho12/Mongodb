@@ -12,7 +12,6 @@ connect();
 const Cat = mongoose.model("Cat", { name: String });
 
 app.get("/cats", async (req, res) => {
-  //   await connect();
   const data = await Cat.find();
   res.send(data);
 });
@@ -28,7 +27,7 @@ app.put("/cat/:id", async (req, res) => {
   const id = req.params.id;
   const cat = await Cat.findByIdAndUpdate(
     id,
-    { name: "Nasaa boi" },
+    { name: "Duree mangar batsaan " },
     { new: true }
   );
   res.send(cat);
