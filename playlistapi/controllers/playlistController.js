@@ -6,7 +6,20 @@ exports.createPlaylist = async (req, res) => {
   res.send(result);
 };
 
-exports.getPlaylist = async (req, res) => {
+exports.getPlaylists = async (req, res) => {
   const result = await Playlist.find({});
   res.send(result);
+};
+
+exports.getPlaylist = async (req, res) => {
+  const result = await Playlist.findById(req.params.id).populate("songs");
+};
+
+exports.addToPlaylist = async (req, res) => {
+  const PLaylistId = req.query.playlistId;
+  const songId = req.params.id;
+  const playlist = await Playlist.findById(PLaylistId);
+  playlist.songs.push(songId);
+  await playlist.save();
+  res.send(Playlist);
 };
