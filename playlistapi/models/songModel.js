@@ -5,7 +5,7 @@ const songSchema = new Schema({
   name: String,
   artist: String,
   duration: Number,
-  createdAt: { type: Date, default: Date.now() },
+  createdAt: { type: Date, default: Date.now()},
   uri: String,
 });
 
